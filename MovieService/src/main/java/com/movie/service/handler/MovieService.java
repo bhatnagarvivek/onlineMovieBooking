@@ -24,6 +24,16 @@ public class MovieService {
 		this.seatRepository = seatRepository;
 	}
 
+	
+
+	public List<Movie> getAllMovies(String title, String language, String genre) {
+		if (title == null && language == null && genre == null) {
+			return movieRepository.findAll();
+		} else {
+			return filterMovies(title, language, genre);
+		}
+	}
+	
 	public List<Movie> filterMovies(String title, String language, String genre) {
 		List<Movie> movies = movieRepository.findAll();
 		List<Movie> filteredMovies = new ArrayList<>();
@@ -46,14 +56,6 @@ public class MovieService {
 		}
 
 		return filteredMovies;
-	}
-
-	public List<Movie> getAllMovies(String title, String language, String genre) {
-		if (title == null && language == null && genre == null) {
-			return movieRepository.findAll();
-		} else {
-			return filterMovies(title, language, genre);
-		}
 	}
 
 	public Movie getMovieById(@PathVariable("id") Long id) {

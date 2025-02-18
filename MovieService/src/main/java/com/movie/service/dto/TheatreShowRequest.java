@@ -1,10 +1,14 @@
 package com.movie.service.dto;
 
-public class TheatreRequest {
+import java.util.ArrayList;
+import java.util.List;
+
+public class TheatreShowRequest {
 
     private String name;
     private String town;
     private Long partnerId;
+    private List<ShowRequest> shows = new ArrayList<>();
     
 	public String getName() {
 		return name;
@@ -30,4 +34,16 @@ public class TheatreRequest {
 		this.partnerId = partnerId;
 	}
 
+	public List<ShowRequest> getShows() {
+		return shows;
+	}
+
+	public void setShows(List<ShowRequest> shows) {
+		this.shows = shows;
+	}
+
+	
+
+
+    
 }

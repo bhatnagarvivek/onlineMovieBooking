@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.movie.service.entity.User;
@@ -41,8 +42,11 @@ public class UserController {
 	}
 
 	@GetMapping
-	public ResponseEntity<List<User>> getUsers(@RequestBody UserRequest request) throws IllegalAccessException {
-		return new ResponseEntity<List<User>>(userService.getUsers(request), HttpStatus.OK);
+	public ResponseEntity<List<User>> getUsers(@RequestParam(required = false) String name
+			,@RequestParam(required = false) String email,
+			@RequestParam(required = false) String role
+			) throws IllegalAccessException {
+		return new ResponseEntity<List<User>>(userService.getUsers(name, email, role), HttpStatus.OK);
 	}
 
 }

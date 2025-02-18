@@ -1,7 +1,9 @@
 package com.movie.service.theatre;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.movie.service.dto.TheatreRequest;
@@ -42,9 +45,18 @@ public class TheatreController {
 	}
 
 	@GetMapping
-	public ResponseEntity<List<Theatre>> getAllTheatres(@RequestBody TheatreRequest request)
+	public ResponseEntity<List<Theatre>> getAllTheatres(@RequestParam(required = false) Long movieId,
+          @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDateTime dateTime,
+			@RequestParam(required = false) String town
+
+	)
 			throws IllegalAccessException {
-		return new ResponseEntity<List<Theatre>>(theatreService.getAllTheatres(request), HttpStatus.OK);
+		return new ResponseEntity<List<Theatre>>(theatreService.getAllTheatres(movieId, dateTime, town), HttpStatus.OK);
 	}
+	
+//	@PutMapping("/{theatreShowId}")
+//	public void handleShows(@PathVariable("theatreShowId") Long id, @RequestBody TheatreShowRequest req) {
+//		theatreService.handleShows(id, req);
+//	}
 
 }

@@ -27,22 +27,6 @@ public class Theatre {
 
     @Column(nullable = false)
     private String town;
-    
-    public String getTown() {
-		return town;
-	}
-
-	public void setTown(String town) {
-		this.town = town;
-	}
-
-	public List<Show> getShows() {
-		return shows;
-	}
-
-	public void setShows(List<Show> shows) {
-		this.shows = shows;
-	}
 
 	@OneToMany(mappedBy = "theater", cascade = CascadeType.ALL)
     private List<Show> shows = new ArrayList<>();
@@ -51,7 +35,6 @@ public class Theatre {
     @JoinColumn(name = "partner_id", nullable = false)
     private User partner;
 
-    // Getters and Setters
     public Long getId() {
         return id;
     }
@@ -68,14 +51,6 @@ public class Theatre {
         this.name = name;
     }
 
-    public String getLocation() {
-        return town;
-    }
-
-    public void setLocation(String location) {
-        this.town = location;
-    }
-
     public User getPartner() {
         return partner;
     }
@@ -83,4 +58,20 @@ public class Theatre {
     public void setPartner(User partner) {
         this.partner = partner;
     }
+    
+    public String getTown() {
+		return town;
+	}
+
+	public void setTown(String town) {
+		this.town = town;
+	}
+
+	public List<Show> getShows() {
+		return shows;
+	}
+
+	public void setShows(List<Show> shows) {
+		this.shows = shows;
+	}
 }

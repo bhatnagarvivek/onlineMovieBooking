@@ -11,7 +11,15 @@ import jakarta.persistence.Table;
 @Table(name = "users")
 public class User {
 
-    @Id
+    public int getBookingCount() {
+		return bookingCount;
+	}
+
+	public void setBookingCount(int bookingCount) {
+		this.bookingCount = bookingCount;
+	}
+
+	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 

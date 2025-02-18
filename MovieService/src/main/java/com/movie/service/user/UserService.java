@@ -1,5 +1,6 @@
 package com.movie.service.user;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -15,24 +16,47 @@ public class UserService {
 		this.userRepository = showRepository;
 	}
 
-	public List<User> getUsers(UserRequest request) throws IllegalAccessException {
-		if (validateRequest(request)) {
-//			Optional<List<Show>> showsList = UserRepository.getShowByMovieId(request.getMovieId(), request.getSlot().withHour(0).withMinute(0).withSecond(0).withNano(0),
-//					request.getSlot().withHour(23).withMinute(59).withSecond(59).withNano(999999999));
-//			if (showsList.isPresent()) {
-//				return showsList.get().stream().filter(item -> request.getTown().equals(item.getTheater().getLocation())).map(data -> data.getTheater()).collect(Collectors.toList());
-//			}
+	public List<User> getUsers(String name,String email, String role
+			) throws IllegalAccessException {
+		if (validateRequest(name,email, role)) {
+			if (name == null && email == null && role == null) {
+				return userRepository.findAll();
+			} else {
+				return filterUser(name,email, role);
+			}
 		} else {
 			throw new IllegalAccessException("validation failed on request data");
 		}
-		return null;
+	}
+	
+	public List<User> filterUser(String name, String email, String role) {
+		List<User> users = userRepository.findAll();
+		List<User> filteredUsers = new ArrayList<>();
+
+		for (User user : users) {
+			boolean match = true;
+
+			if (name != null && !user.getName().equals(name)) {
+				match = false;
+			}
+			if (email != null && !user.getEmail().equals(email)) {
+				match = false;
+			}
+			if (role != null && !user.getRole().equals(role)) {
+				match = false;
+			}
+			if (match) {
+				filteredUsers.add(user);
+			}
+		}
+
+		return filteredUsers;
 	}
 
-	private boolean validateRequest(UserRequest request) {
+	private boolean validateRequest(String name, String email, String role) {
 		// perform all needed validations on request params.
-		// can customize here to identify and share what is invalid in request data.
-		return true;
-
+				// can customize here to identify and share what is invalid in request data.
+				return true;
 	}
 
 	public void addUser(UserRequest request) {
@@ -41,6 +65,7 @@ public class UserService {
 		user.setEmail(request.getEmail());
 		user.setPassword(request.getPassword());
 		user.setRole(request.getRole());
+		user.setBookingCount(request.getBookingCount());
 		userRepository.save(user);
 
 	}
@@ -59,6 +84,7 @@ public class UserService {
 		user.setEmail(request.getEmail());
 		user.setPassword(request.getPassword());
 		user.setRole(request.getRole());
+		user.setBookingCount(request.getBookingCount());
 		userRepository.save(user);
 
 	}
